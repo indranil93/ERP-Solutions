@@ -1,0 +1,153 @@
+version: "2"
+
+services:
+
+  gateway:
+    build: ./gateway
+    ports:
+      - "8000:80"
+      - "80:80"
+    networks:
+      - frontend
+    depends_on:
+      - "api"
+      - "webapp"
+      
+  webapp:
+    build: ./webapp
+    ports: 
+      - 8001:80
+      - 8003:443    
+    environment:
+      - no_proxy=api,stock,purchase,sale,quotation,company,bill
+    networks:
+      - frontend
+      - backend
+    volumes:
+      - $PWD/web2py/applications/erp:/home/www-data/web2py/applications/erp
+    links:
+      - mysqldb
+      - api
+    depends_on:
+      - "api"
+      - "mysqldb"
+   
+  api:
+    build: ./api    
+    ports: 
+      - 8002:80
+      - 8004:443 
+    networks:
+      - frontend
+      - backend
+    volumes:
+      - $PWD/web2py/applications/api:/home/www-data/web2py/applications/api
+    links:
+      - mysqldb
+    depends_on:
+      - "mysqldb"
+
+  stock:
+    build: ./api    
+    ports: 
+      - 8006:80
+      - 8007:443 
+    networks:
+      - frontend
+      - backend
+    volumes:
+      - $PWD/web2py/applications/api:/home/www-data/web2py/applications/api
+    links:
+      - mysqldb
+    depends_on:
+      - "mysqldb"
+
+  company:
+    build: ./api    
+    ports: 
+      - 8008:80
+      - 8009:443 
+    networks:
+      - frontend
+      - backend
+    volumes:
+      - $PWD/web2py/applications/api:/home/www-data/web2py/applications/api
+    links:
+      - mysqldb
+    depends_on:
+      - "mysqldb"
+  
+  purchase:
+    build: ./api    
+    ports: 
+      - 8010:80
+      - 8011:443 
+    networks:
+      - frontend
+      - backend
+    volumes:
+      - $PWD/web2py/applications/api:/home/www-data/web2py/applications/api
+    links:
+      - mysqldb
+    depends_on:
+      - "mysqldb"
+
+  sale:
+    build: ./api    
+    ports: 
+      - 8012:80
+      - 8013:443 
+    networks:
+      - frontend
+      - backend
+    volumes:
+      - $PWD/web2py/applications/api:/home/www-data/web2py/applications/api
+    links:
+      - mysqldb
+    depends_on:
+      - "mysqldb"
+
+  quotation:
+    build: ./api    
+    ports: 
+      - 8014:80
+      - 8015:443 
+    networks:
+      - frontend
+      - backend
+    volumes:
+      - $PWD/web2py/applications/api:/home/www-data/web2py/applications/api
+    links:
+      - mysqldb
+    depends_on:
+      - "mysqldb"
+
+  bill:
+    build: ./api    
+    ports: 
+      - 8016:80
+      - 8017:443 
+    networks:
+      - frontend
+      - backend
+    volumes:
+      - $PWD/web2py/applications/api:/home/www-data/web2py/applications/api
+    links:
+      - mysqldb
+    depends_on:
+      - "mysqldb"
+
+  mysqldb:
+    build: ./mysqldb
+    ports:
+      - "3306:3306"
+    volumes:
+      - /Users/adityagaykar/Documents/mysqldata:/var/lib/mysql
+    networks:
+      - backend
+
+networks:
+  frontend:
+    #driver: overlay
+  backend:
+    #driver: overlay

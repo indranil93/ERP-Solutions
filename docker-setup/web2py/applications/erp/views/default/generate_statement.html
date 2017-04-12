@@ -1,0 +1,24 @@
+<link rel="stylesheet" href="maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min,css">
+
+<link rel="stylesheet" href="{{=URL('static','css/bootstrap.min.css')}}"/>
+<div class="col-md-6" style="border: 1px solid black">
+	<div class="col-md-12">
+		<h1>Demo Statement</h1>
+	</div>
+	<div  class="col-md-12">
+		<h3>From: {{=data["from_date"]}}</h3>
+        <h3>To: {{=data["to_date"]}}</h3>
+		<table class="table col-md-12">
+			<tr>
+				<th>Sales:<i class="fa fa-int"></i>{{=s}}</th>
+				<th>Total Purchase: {{=p}}</th>
+                {{if profit < 0:}}
+                    <th>Loss: {{=(-1*profit)}}</th>
+                {{else:}}
+                    <th>Profit: {{=profit}}</th>
+                {{pass}}
+			</tr>
+		</table>		
+	</div>
+</div>
+

@@ -1,0 +1,2081 @@
+timestamp: 2017-03-26T19:24:23.807727
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2017-03-26T19:26:10.095711
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2017-03-26T19:27:10.540841
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-26T19:27:10.551352
+CREATE TABLE auth_group(
+    id INT AUTO_INCREMENT NOT NULL,
+    role VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-26T19:27:10.565781
+CREATE TABLE auth_membership(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-26T19:27:10.585711
+CREATE TABLE auth_permission(
+    id INT AUTO_INCREMENT NOT NULL,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    table_name VARCHAR(512),
+    record_id INT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-26T19:27:10.604449
+CREATE TABLE auth_event(
+    id INT AUTO_INCREMENT NOT NULL,
+    time_stamp DATETIME,
+    client_ip VARCHAR(512),
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    origin VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-26T19:27:10.623560
+CREATE TABLE auth_cas(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    created_on DATETIME,
+    service VARCHAR(512),
+    ticket VARCHAR(512),
+    renew CHAR(1),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-26T19:27:10.672956
+CREATE TABLE purchase(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    purchase_date DATE,
+    company_name VARCHAR(512),
+    address VARCHAR(512),
+    mail_id VARCHAR(512),
+    phone_no VARCHAR(512),
+    invoice_no VARCHAR(512) UNIQUE,
+    vat_no VARCHAR(512),
+    vat_amount DOUBLE,
+    total_amount DOUBLE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-26T19:27:10.691684
+CREATE TABLE company(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    address VARCHAR(512),
+    phone VARCHAR(512),
+    email VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-26T19:27:10.713070
+CREATE TABLE purchase_materials(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    amount DOUBLE,
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-26T19:27:10.732805
+CREATE TABLE sales_materials(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    bill_no INT,
+    amount VARCHAR(512),
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-26T19:27:10.741324
+CREATE TABLE stock(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-26T19:27:10.759300
+CREATE TABLE quotation(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    bill_no INT,
+    amount DOUBLE,
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+<<<<<<< HEAD
+timestamp: 2017-03-27T12:57:40.369611
+=======
+timestamp: 2017-03-27T16:46:05.477375
+>>>>>>> c1c2423494ac03c1548f94ef4cff2a7c7dcea906
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+<<<<<<< HEAD
+timestamp: 2017-03-27T13:01:21.181547
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2017-03-27T13:02:20.831806
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2017-03-27T13:03:52.117804
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2017-03-27T13:05:20.454065
+=======
+timestamp: 2017-03-27T16:47:14.516384
+>>>>>>> c1c2423494ac03c1548f94ef4cff2a7c7dcea906
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+<<<<<<< HEAD
+timestamp: 2017-03-27T13:05:20.459099
+=======
+timestamp: 2017-03-27T16:47:14.521321
+>>>>>>> c1c2423494ac03c1548f94ef4cff2a7c7dcea906
+CREATE TABLE auth_group(
+    id INT AUTO_INCREMENT NOT NULL,
+    role VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+<<<<<<< HEAD
+timestamp: 2017-03-27T13:05:20.466655
+=======
+timestamp: 2017-03-27T16:47:14.527095
+>>>>>>> c1c2423494ac03c1548f94ef4cff2a7c7dcea906
+CREATE TABLE auth_membership(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+<<<<<<< HEAD
+timestamp: 2017-03-27T13:05:20.473665
+=======
+timestamp: 2017-03-27T16:47:14.533783
+>>>>>>> c1c2423494ac03c1548f94ef4cff2a7c7dcea906
+CREATE TABLE auth_permission(
+    id INT AUTO_INCREMENT NOT NULL,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    table_name VARCHAR(512),
+    record_id INT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+<<<<<<< HEAD
+timestamp: 2017-03-27T13:05:20.481482
+=======
+timestamp: 2017-03-27T16:47:14.541267
+>>>>>>> c1c2423494ac03c1548f94ef4cff2a7c7dcea906
+CREATE TABLE auth_event(
+    id INT AUTO_INCREMENT NOT NULL,
+    time_stamp DATETIME,
+    client_ip VARCHAR(512),
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    origin VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+<<<<<<< HEAD
+timestamp: 2017-03-27T13:05:20.489010
+=======
+timestamp: 2017-03-27T16:47:14.548509
+>>>>>>> c1c2423494ac03c1548f94ef4cff2a7c7dcea906
+CREATE TABLE auth_cas(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    created_on DATETIME,
+    service VARCHAR(512),
+    ticket VARCHAR(512),
+    renew CHAR(1),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+<<<<<<< HEAD
+timestamp: 2017-03-27T13:05:20.506081
+=======
+timestamp: 2017-03-27T16:47:14.567714
+>>>>>>> c1c2423494ac03c1548f94ef4cff2a7c7dcea906
+CREATE TABLE purchase(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    purchase_date DATE,
+    company_name VARCHAR(512),
+    address VARCHAR(512),
+    mail_id VARCHAR(512),
+    phone_no VARCHAR(512),
+    invoice_no VARCHAR(512) UNIQUE,
+    vat_no VARCHAR(512),
+    vat_amount DOUBLE,
+    total_amount DOUBLE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+<<<<<<< HEAD
+timestamp: 2017-03-27T13:05:20.512865
+=======
+timestamp: 2017-03-27T16:47:14.574316
+>>>>>>> c1c2423494ac03c1548f94ef4cff2a7c7dcea906
+CREATE TABLE company(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    address VARCHAR(512),
+    phone VARCHAR(512),
+    email VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+<<<<<<< HEAD
+timestamp: 2017-03-27T13:05:20.522693
+=======
+timestamp: 2017-03-27T16:47:14.583561
+>>>>>>> c1c2423494ac03c1548f94ef4cff2a7c7dcea906
+CREATE TABLE purchase_materials(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    amount DOUBLE,
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+<<<<<<< HEAD
+timestamp: 2017-03-27T13:05:20.532812
+=======
+timestamp: 2017-03-27T16:47:14.593516
+>>>>>>> c1c2423494ac03c1548f94ef4cff2a7c7dcea906
+CREATE TABLE sales_materials(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    bill_no INT,
+    amount VARCHAR(512),
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+<<<<<<< HEAD
+timestamp: 2017-03-27T13:05:20.538893
+=======
+timestamp: 2017-03-27T16:47:14.599225
+>>>>>>> c1c2423494ac03c1548f94ef4cff2a7c7dcea906
+CREATE TABLE stock(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+<<<<<<< HEAD
+timestamp: 2017-03-27T13:05:20.548709
+=======
+timestamp: 2017-03-27T16:47:14.608946
+>>>>>>> c1c2423494ac03c1548f94ef4cff2a7c7dcea906
+CREATE TABLE quotation(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    bill_no INT,
+    amount DOUBLE,
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T19:17:26.096347
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T19:17:26.104762
+CREATE TABLE auth_group(
+    id INT AUTO_INCREMENT NOT NULL,
+    role VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T19:17:26.117042
+CREATE TABLE auth_membership(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T19:17:26.136692
+CREATE TABLE auth_permission(
+    id INT AUTO_INCREMENT NOT NULL,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    table_name VARCHAR(512),
+    record_id INT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T19:17:26.276520
+CREATE TABLE auth_event(
+    id INT AUTO_INCREMENT NOT NULL,
+    time_stamp DATETIME,
+    client_ip VARCHAR(512),
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    origin VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T19:17:26.330401
+CREATE TABLE auth_cas(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    created_on DATETIME,
+    service VARCHAR(512),
+    ticket VARCHAR(512),
+    renew CHAR(1),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T19:17:26.432437
+CREATE TABLE purchase(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    purchase_date DATE,
+    company_name VARCHAR(512),
+    address VARCHAR(512),
+    mail_id VARCHAR(512),
+    phone_no VARCHAR(512),
+    invoice_no VARCHAR(512) UNIQUE,
+    vat_no VARCHAR(512),
+    vat_amount DOUBLE,
+    total_amount DOUBLE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T19:17:26.454435
+CREATE TABLE company(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    address VARCHAR(512),
+    phone VARCHAR(512),
+    email VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T19:17:26.503333
+CREATE TABLE purchase_materials(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    amount DOUBLE,
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T19:17:26.576801
+CREATE TABLE sales_materials(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    bill_no INT,
+    amount VARCHAR(512),
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T19:17:26.594246
+CREATE TABLE stock(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T19:17:26.652215
+CREATE TABLE quotation(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    bill_no INT,
+    amount DOUBLE,
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T14:54:24.044276
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T14:54:24.057321
+CREATE TABLE auth_group(
+    id INT AUTO_INCREMENT NOT NULL,
+    role VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T14:54:24.079518
+CREATE TABLE auth_membership(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T14:54:24.108464
+CREATE TABLE auth_permission(
+    id INT AUTO_INCREMENT NOT NULL,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    table_name VARCHAR(512),
+    record_id INT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T14:54:24.130370
+CREATE TABLE auth_event(
+    id INT AUTO_INCREMENT NOT NULL,
+    time_stamp DATETIME,
+    client_ip VARCHAR(512),
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    origin VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T14:54:24.156871
+CREATE TABLE auth_cas(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    created_on DATETIME,
+    service VARCHAR(512),
+    ticket VARCHAR(512),
+    renew CHAR(1),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T14:54:24.191460
+CREATE TABLE purchase(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    purchase_date DATE,
+    company_name VARCHAR(512),
+    address VARCHAR(512),
+    mail_id VARCHAR(512),
+    phone_no VARCHAR(512),
+    invoice_no VARCHAR(512) UNIQUE,
+    vat_no VARCHAR(512),
+    vat_amount DOUBLE,
+    total_amount DOUBLE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T14:54:24.216533
+CREATE TABLE company(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    address VARCHAR(512),
+    phone VARCHAR(512),
+    email VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T14:54:24.246508
+CREATE TABLE purchase_materials(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    amount DOUBLE,
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T14:54:24.286006
+CREATE TABLE sales_materials(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    bill_no INT,
+    amount VARCHAR(512),
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T14:54:24.316156
+CREATE TABLE stock(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T14:54:24.340008
+CREATE TABLE quotation(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    bill_no INT,
+    amount DOUBLE,
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T14:55:39.949266
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T14:55:39.961509
+CREATE TABLE auth_group(
+    id INT AUTO_INCREMENT NOT NULL,
+    role VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T14:55:39.997372
+CREATE TABLE auth_membership(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T14:55:40.057379
+CREATE TABLE auth_permission(
+    id INT AUTO_INCREMENT NOT NULL,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    table_name VARCHAR(512),
+    record_id INT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T14:55:40.088864
+CREATE TABLE auth_event(
+    id INT AUTO_INCREMENT NOT NULL,
+    time_stamp DATETIME,
+    client_ip VARCHAR(512),
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    origin VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T14:55:40.113122
+CREATE TABLE auth_cas(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    created_on DATETIME,
+    service VARCHAR(512),
+    ticket VARCHAR(512),
+    renew CHAR(1),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T14:55:40.160999
+CREATE TABLE purchase(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    purchase_date DATE,
+    company_name VARCHAR(512),
+    address VARCHAR(512),
+    mail_id VARCHAR(512),
+    phone_no VARCHAR(512),
+    invoice_no VARCHAR(512) UNIQUE,
+    vat_no VARCHAR(512),
+    vat_amount DOUBLE,
+    total_amount DOUBLE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T14:55:40.185559
+CREATE TABLE company(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    address VARCHAR(512),
+    phone VARCHAR(512),
+    email VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T14:55:40.205591
+CREATE TABLE purchase_materials(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    amount DOUBLE,
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T14:55:40.231347
+CREATE TABLE sales_materials(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    bill_no INT,
+    amount VARCHAR(512),
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T14:55:40.255122
+CREATE TABLE stock(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T14:55:40.278700
+CREATE TABLE quotation(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    bill_no INT,
+    amount DOUBLE,
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T14:57:41.758781
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T14:57:41.878284
+CREATE TABLE auth_group(
+    id INT AUTO_INCREMENT NOT NULL,
+    role VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T14:57:42.005745
+CREATE TABLE auth_membership(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T14:57:42.152033
+CREATE TABLE auth_permission(
+    id INT AUTO_INCREMENT NOT NULL,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    table_name VARCHAR(512),
+    record_id INT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T14:57:42.292128
+CREATE TABLE auth_event(
+    id INT AUTO_INCREMENT NOT NULL,
+    time_stamp DATETIME,
+    client_ip VARCHAR(512),
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    origin VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T14:57:42.438060
+CREATE TABLE auth_cas(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    created_on DATETIME,
+    service VARCHAR(512),
+    ticket VARCHAR(512),
+    renew CHAR(1),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T14:57:42.571723
+CREATE TABLE purchase(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    purchase_date DATE,
+    company_name VARCHAR(512),
+    address VARCHAR(512),
+    mail_id VARCHAR(512),
+    phone_no VARCHAR(512),
+    invoice_no VARCHAR(512) UNIQUE,
+    vat_no VARCHAR(512),
+    vat_amount DOUBLE,
+    total_amount DOUBLE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T14:57:42.743727
+CREATE TABLE company(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    address VARCHAR(512),
+    phone VARCHAR(512),
+    email VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T14:57:42.903226
+CREATE TABLE purchase_materials(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    amount DOUBLE,
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T14:57:43.059179
+CREATE TABLE sales_materials(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    bill_no INT,
+    amount VARCHAR(512),
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T14:57:43.221357
+CREATE TABLE stock(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T14:57:43.364473
+CREATE TABLE quotation(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    bill_no INT,
+    amount DOUBLE,
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T15:03:35.519143
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2017-03-29T15:04:53.530063
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T15:04:53.541922
+CREATE TABLE auth_group(
+    id INT AUTO_INCREMENT NOT NULL,
+    role VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T15:04:53.562516
+CREATE TABLE auth_membership(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T15:04:53.591800
+CREATE TABLE auth_permission(
+    id INT AUTO_INCREMENT NOT NULL,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    table_name VARCHAR(512),
+    record_id INT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T15:04:53.615041
+CREATE TABLE auth_event(
+    id INT AUTO_INCREMENT NOT NULL,
+    time_stamp DATETIME,
+    client_ip VARCHAR(512),
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    origin VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T15:04:53.637979
+CREATE TABLE auth_cas(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    created_on DATETIME,
+    service VARCHAR(512),
+    ticket VARCHAR(512),
+    renew CHAR(1),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T15:04:53.678386
+CREATE TABLE purchase(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    purchase_date DATE,
+    company_name VARCHAR(512),
+    address VARCHAR(512),
+    mail_id VARCHAR(512),
+    phone_no VARCHAR(512),
+    invoice_no VARCHAR(512) UNIQUE,
+    vat_no VARCHAR(512),
+    vat_amount DOUBLE,
+    total_amount DOUBLE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T15:04:53.707991
+CREATE TABLE company(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    address VARCHAR(512),
+    phone VARCHAR(512),
+    email VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T15:04:53.737525
+CREATE TABLE purchase_materials(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    amount DOUBLE,
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T15:04:53.767932
+CREATE TABLE sales_materials(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    bill_no INT,
+    amount VARCHAR(512),
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T15:04:53.793187
+CREATE TABLE stock(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T15:04:53.815045
+CREATE TABLE quotation(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    bill_no INT,
+    amount DOUBLE,
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T15:07:53.398096
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T15:07:53.534094
+CREATE TABLE auth_group(
+    id INT AUTO_INCREMENT NOT NULL,
+    role VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T15:07:53.646302
+CREATE TABLE auth_membership(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T15:07:53.809640
+CREATE TABLE auth_permission(
+    id INT AUTO_INCREMENT NOT NULL,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    table_name VARCHAR(512),
+    record_id INT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T15:07:53.984011
+CREATE TABLE auth_event(
+    id INT AUTO_INCREMENT NOT NULL,
+    time_stamp DATETIME,
+    client_ip VARCHAR(512),
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    origin VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T15:07:54.142475
+CREATE TABLE auth_cas(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    created_on DATETIME,
+    service VARCHAR(512),
+    ticket VARCHAR(512),
+    renew CHAR(1),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T15:07:54.265445
+CREATE TABLE purchase(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    purchase_date DATE,
+    company_name VARCHAR(512),
+    address VARCHAR(512),
+    mail_id VARCHAR(512),
+    phone_no VARCHAR(512),
+    invoice_no VARCHAR(512) UNIQUE,
+    vat_no VARCHAR(512),
+    vat_amount DOUBLE,
+    total_amount DOUBLE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T15:07:54.421999
+CREATE TABLE company(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    address VARCHAR(512),
+    phone VARCHAR(512),
+    email VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T15:07:54.544119
+CREATE TABLE purchase_materials(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    amount DOUBLE,
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T15:07:54.692492
+CREATE TABLE sales_materials(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    bill_no INT,
+    amount VARCHAR(512),
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T15:07:54.858466
+CREATE TABLE stock(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T15:07:54.978897
+CREATE TABLE quotation(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    bill_no INT,
+    amount DOUBLE,
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T15:10:04.813860
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    role VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T15:10:04.936628
+CREATE TABLE auth_group(
+    id INT AUTO_INCREMENT NOT NULL,
+    role VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T15:10:05.079038
+CREATE TABLE auth_membership(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T15:10:05.218623
+CREATE TABLE auth_permission(
+    id INT AUTO_INCREMENT NOT NULL,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    table_name VARCHAR(512),
+    record_id INT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T15:10:05.344192
+CREATE TABLE auth_event(
+    id INT AUTO_INCREMENT NOT NULL,
+    time_stamp DATETIME,
+    client_ip VARCHAR(512),
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    origin VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T15:10:05.486973
+CREATE TABLE auth_cas(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    created_on DATETIME,
+    service VARCHAR(512),
+    ticket VARCHAR(512),
+    renew CHAR(1),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T15:10:05.623590
+CREATE TABLE purchase(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    purchase_date DATE,
+    company_name VARCHAR(512),
+    address VARCHAR(512),
+    mail_id VARCHAR(512),
+    phone_no VARCHAR(512),
+    invoice_no VARCHAR(512) UNIQUE,
+    vat_no VARCHAR(512),
+    vat_amount DOUBLE,
+    total_amount DOUBLE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T15:10:05.778317
+CREATE TABLE company(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    address VARCHAR(512),
+    phone VARCHAR(512),
+    email VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T15:10:05.914316
+CREATE TABLE purchase_materials(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    amount DOUBLE,
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T15:10:06.049966
+CREATE TABLE sales_materials(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    bill_no INT,
+    amount VARCHAR(512),
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T15:10:06.191761
+CREATE TABLE stock(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T15:10:06.320244
+CREATE TABLE quotation(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    bill_no INT,
+    amount DOUBLE,
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2017-03-29T16:46:47.690260
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    role VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2017-03-29T16:47:58.677307
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    role VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T16:47:58.689759
+CREATE TABLE auth_group(
+    id INT AUTO_INCREMENT NOT NULL,
+    role VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T16:47:58.711893
+CREATE TABLE auth_membership(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T16:47:58.772241
+CREATE TABLE auth_permission(
+    id INT AUTO_INCREMENT NOT NULL,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    table_name VARCHAR(512),
+    record_id INT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T16:47:58.800785
+CREATE TABLE auth_event(
+    id INT AUTO_INCREMENT NOT NULL,
+    time_stamp DATETIME,
+    client_ip VARCHAR(512),
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    origin VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T16:47:58.846306
+CREATE TABLE auth_cas(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    created_on DATETIME,
+    service VARCHAR(512),
+    ticket VARCHAR(512),
+    renew CHAR(1),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T16:47:58.887456
+CREATE TABLE purchase(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    purchase_date DATE,
+    company_name VARCHAR(512),
+    address VARCHAR(512),
+    mail_id VARCHAR(512),
+    phone_no VARCHAR(512),
+    invoice_no VARCHAR(512) UNIQUE,
+    vat_no VARCHAR(512),
+    vat_amount DOUBLE,
+    total_amount DOUBLE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T16:47:58.913435
+CREATE TABLE company(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    address VARCHAR(512),
+    phone VARCHAR(512),
+    email VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T16:47:58.935756
+CREATE TABLE purchase_materials(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    amount DOUBLE,
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T16:47:58.958805
+CREATE TABLE sales_materials(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    bill_no INT,
+    amount VARCHAR(512),
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T16:47:58.981286
+CREATE TABLE stock(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-29T16:47:59.004774
+CREATE TABLE quotation(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    bill_no INT,
+    amount DOUBLE,
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-30T08:17:03.337640
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    role VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-30T08:17:03.352353
+CREATE TABLE auth_group(
+    id INT AUTO_INCREMENT NOT NULL,
+    role VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-30T08:17:03.379176
+CREATE TABLE auth_membership(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-30T08:17:03.407490
+CREATE TABLE auth_permission(
+    id INT AUTO_INCREMENT NOT NULL,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    table_name VARCHAR(512),
+    record_id INT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-30T08:17:03.446027
+CREATE TABLE auth_event(
+    id INT AUTO_INCREMENT NOT NULL,
+    time_stamp DATETIME,
+    client_ip VARCHAR(512),
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    origin VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-30T08:17:03.481248
+CREATE TABLE auth_cas(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    created_on DATETIME,
+    service VARCHAR(512),
+    ticket VARCHAR(512),
+    renew CHAR(1),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-30T08:17:03.529593
+CREATE TABLE purchase(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    purchase_date DATE,
+    company_name VARCHAR(512),
+    address VARCHAR(512),
+    mail_id VARCHAR(512),
+    phone_no VARCHAR(512),
+    invoice_no VARCHAR(512) UNIQUE,
+    vat_no VARCHAR(512),
+    vat_amount DOUBLE,
+    total_amount DOUBLE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-30T08:17:03.553305
+CREATE TABLE company(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    address VARCHAR(512),
+    phone VARCHAR(512),
+    email VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-30T08:17:03.575104
+CREATE TABLE purchase_materials(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    amount DOUBLE,
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-30T08:17:03.611353
+CREATE TABLE sales_materials(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    bill_no INT,
+    amount VARCHAR(512),
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-30T08:17:03.641860
+CREATE TABLE stock(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-03-30T08:17:03.666436
+CREATE TABLE quotation(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    bill_no INT,
+    amount DOUBLE,
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    isActive INT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-04-06T12:16:05.658924
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    role VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-04-06T12:16:05.660459
+CREATE TABLE auth_group(
+    id INT AUTO_INCREMENT NOT NULL,
+    role VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-04-06T12:16:05.661705
+CREATE TABLE auth_membership(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-04-06T12:16:05.663553
+CREATE TABLE auth_permission(
+    id INT AUTO_INCREMENT NOT NULL,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    table_name VARCHAR(512),
+    record_id INT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-04-06T12:16:05.665057
+CREATE TABLE auth_event(
+    id INT AUTO_INCREMENT NOT NULL,
+    time_stamp DATETIME,
+    client_ip VARCHAR(512),
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    origin VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-04-06T12:16:05.666568
+CREATE TABLE auth_cas(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    created_on DATETIME,
+    service VARCHAR(512),
+    ticket VARCHAR(512),
+    renew CHAR(1),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-04-06T12:16:05.671610
+CREATE TABLE purchase(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    purchase_date DATE,
+    company_name VARCHAR(512),
+    address VARCHAR(512),
+    mail_id VARCHAR(512),
+    phone_no VARCHAR(512),
+    invoice_no VARCHAR(512) UNIQUE,
+    vat_no VARCHAR(512),
+    vat_amount DOUBLE,
+    total_amount DOUBLE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-04-06T12:16:05.673916
+CREATE TABLE company(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    address VARCHAR(512),
+    phone VARCHAR(512),
+    email VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-04-06T12:16:05.676551
+CREATE TABLE purchase_materials(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    amount DOUBLE,
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-04-06T12:16:05.678489
+CREATE TABLE sales_materials(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    bill_no INT,
+    amount VARCHAR(512),
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-04-06T12:16:05.679805
+CREATE TABLE stock(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-04-06T12:16:05.681655
+CREATE TABLE quotation(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    bill_no INT,
+    amount DOUBLE,
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    isActive INT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-04-06T12:17:22.433630
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    role VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2017-04-06T12:17:26.906184
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    role VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2017-04-06T12:19:33.896511
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    role VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2017-04-06T12:19:41.475799
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    role VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2017-04-06T12:21:38.132269
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    role VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-04-06T12:21:38.135381
+CREATE TABLE auth_group(
+    id INT AUTO_INCREMENT NOT NULL,
+    role VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-04-06T12:21:38.138684
+CREATE TABLE auth_membership(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-04-06T12:21:38.142033
+CREATE TABLE auth_permission(
+    id INT AUTO_INCREMENT NOT NULL,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    table_name VARCHAR(512),
+    record_id INT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-04-06T12:21:38.146640
+CREATE TABLE auth_event(
+    id INT AUTO_INCREMENT NOT NULL,
+    time_stamp DATETIME,
+    client_ip VARCHAR(512),
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    origin VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-04-06T12:21:38.148207
+CREATE TABLE auth_cas(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    created_on DATETIME,
+    service VARCHAR(512),
+    ticket VARCHAR(512),
+    renew CHAR(1),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-04-06T12:21:38.152187
+CREATE TABLE purchase(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    purchase_date DATE,
+    company_name VARCHAR(512),
+    address VARCHAR(512),
+    mail_id VARCHAR(512),
+    phone_no VARCHAR(512),
+    invoice_no VARCHAR(512) UNIQUE,
+    vat_no VARCHAR(512),
+    vat_amount DOUBLE,
+    total_amount DOUBLE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-04-06T12:21:38.153683
+CREATE TABLE company(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    address VARCHAR(512),
+    phone VARCHAR(512),
+    email VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-04-06T12:21:38.155359
+CREATE TABLE purchase_materials(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    amount DOUBLE,
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-04-06T12:21:38.157076
+CREATE TABLE sales_materials(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    bill_no INT,
+    amount VARCHAR(512),
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-04-06T12:21:38.158467
+CREATE TABLE stock(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!
+timestamp: 2017-04-06T12:21:38.160164
+CREATE TABLE quotation(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    description VARCHAR(512),
+    quantity VARCHAR(512),
+    rate DOUBLE,
+    vat DOUBLE,
+    company INT  , INDEX company__idx (company), FOREIGN KEY (company) REFERENCES company (id) ON DELETE CASCADE,
+    bill_no INT,
+    amount DOUBLE,
+    payment VARCHAR(512),
+    purchase_date DATETIME,
+    isActive INT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+faked!

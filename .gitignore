@@ -1,0 +1,39 @@
+#ignore pyc files
+*.pyc
+
+#ignore session files
+docker-setup/web2py/applications/erp/sessions/*
+docker-setup/web2py/applications/admin/sessions/*
+docker-setup/web2py/applications/api/sessions/*
+
+#ignore error files
+docker-setup/web2py/applications/erp/errors/*
+docker-setup/web2py/applications/api/errors/*
+docker-setup/web2py/applications/welcome/errors
+docker-setup/web2py/applications/welcome/errors/*
+
+#ignore .vscode
+docker-setup/web2py/applications/erp/.vscode
+docker-setup/.vscode
+.vscode
+
+#http_server
+docker-setup/web2py/httpserver.log
+
+#ignore cache
+docker-setup/web2py/.cache
+docker-setup/web2py/applications/erp/.cache
+docker-setup/web2py/applications/erp/tests/.cache
+
+#database
+#web2py/applications/erp/databases
+#web2py/applications/api/databases
+web2py/applications/welcome/databases
+web2py/applications/welcome/databases/*
+#web2py/applications/erp/databases/*
+#web2py/applications/api/databases/*
+
+#server files ignore
+docker-setup/web2py/httpserver.log
+docker-setup/web2py/httpserver.pid
+docker-setup/web2py/parameters_8000.py

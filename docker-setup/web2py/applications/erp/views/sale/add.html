@@ -1,0 +1,194 @@
+{{extend 'layout.html'}}
+
+<h2>Add Sale</h2>
+
+<hr>
+<div col-md-12>
+	<form method="POST" action="{{=URL('sale','insert_sale')}}">
+	<div class="col-md-5">
+		<div class="form-group">
+			<label for="purchase_date1">Date</label>
+			<input type="text" name="purchase_date1" class="form-control datetime" required/>
+		</div>
+		<div class="form-group">
+			<label for="company1">Company</label>
+			<select class="form-control" name="company1" required>				
+				{{for company in companies:}}
+					<option value="{{=company.id}}">{{=company.name}}</option>
+				{{pass}}
+			</select>
+		</div>
+		<!-- <div class="form-group">
+			<label for="invoice1">Invoice no</label>
+			<input type="number" name="invoice1" class="form-control" min=0 placeholder="Invoice no" />
+		</div>
+		<div class="form-group">
+			<label for="vatno1">VAT no</label>
+			<input class="form-control" type="number" name="vatno1" placeholder="VAT no" min=0 required/>			
+		</div> -->
+	</div>
+	<div class="col-md-12">
+		<h3>Materials<a href="#" id="gen_boxes" class="pull-right btn btn-primary">Add new row</a></h3>
+		<table class="table">
+			<tr>
+				<!-- <th>Date</th>
+				<th>Company</th>
+				<th>Invoice no</th>
+				<th>VAT no</th> -->
+				<th>Description</th>
+				<th>Quantity</th>
+				<th>Rate</th>
+				<th>VAT %</th>
+				<th>Amount</th>
+				<th>Payment</th>
+				<th></th>
+			</tr>
+			<tr>
+				<!-- <td>
+					<input type="text" name="purchase_date1" class="form-control datetime" required/>
+				</td>
+				<td>
+					<select class="form-control" name="company1">
+						{{for company in companies:}}
+							<option value="{{=company.id}}">{{=company.name}}</option>
+						{{pass}}
+					</select>
+				</td>
+				<td>
+					<input type="number" name="invoice1" class="form-control" min=0 placeholder="Invoice no" required/>
+				</td>
+				<td>
+					<input class="form-control" type="number" name="vatno1" placeholder="VAT no" min=0 required/>
+				</td> -->
+				<td>
+					<select name="description1" class="form-control description" required>
+						<option value="">select</option>
+						{{for obj in stock:}}
+							<option value="{{=obj.description}}" quantity="{{=obj.quantity}}">{{=obj.description}}</option>
+						{{pass}}
+					</select>
+				</td>
+				<td>
+					<input type="number" class="form-control calc" name="quantity1" min=0 placeholder="Quantity" value="0" required/>
+				</td>
+				<td>
+					<input type="number" class="form-control calc" name="rate1" min=0 placeholder="Rate" value="0" required/>
+				</td>
+				<td>
+					<input type="number" class="form-control calc" name="vat1" min=0 step="0.01" placeholder="VAT" value="13.5" required/>
+				</td>
+				<td>
+					<input type="number" class="form-control" name="amount1" min=0 placeholder="Amount" value="0" readonly="readonly" required/>
+				</td>
+				<td>
+					<select class="form-control" name="payment1">						
+						<option value="PENDING">PENDING</option>
+						<option value="CASH">CASH</option>
+						<option value="DEBIT CARD">DEBIT CARD</option>
+						<option value="CREDIT CARD">CREDIT CARD</option>
+						<option value="OTHER">OTHER</option>
+					</select>
+
+				</td>
+				<td></td>
+			</tr>
+		</table>
+	</div>	
+	<div class="col-md-12">
+		<input type="submit" class="col-md-2 col-md-offset-5 btn btn-success"/>
+	</div
+	</form>
+</div>
+
+
+<script>
+	var i = 1;
+	
+	$(document).ready(function(){
+		$(".calc").change(function(){
+				var q = $(this).parent().parent().find("input[name=quantity1]").val();
+				var r = $(this).parent().parent().find("input[name=rate1]").val();		
+				var vat = $(this).parent().parent().find("input[name=vat1]").val();
+				var total = q*r*(1+parseFloat(vat)/100);
+				var amt = $(this).parent().parent().find("input[name=amount1]").val(total);
+				console.log(amt);
+				//console.log(ele);
+			});
+
+		$(".description").change(function(){
+			var id = $(this).val();
+			var quantity = $(this).find("option[value='"+id+"']").attr("quantity");
+			var parent = $(this).parent().parent().find("input[name=quantity1]").attr("max",quantity);
+		});
+		
+		$("#gen_boxes").click(function(){						
+			//$("#material_holder").html("");	
+			var box = "";
+			box+= '<tr>'
+			// box+= '<td>'
+			// box+=		'<input type="text" name="purchase_date1" class="form-control datetime" required/>'
+			// box+=	'</td>'
+			// box+= '	<td>'
+			// box+= '		<select class="form-control" name="company'+i+'">'
+			// box+= '			{{for company in companies:}}<option value="{{=company.id}}">{{=company.name}}</option>{{pass}}'
+			// box+= '		</select>'
+			// box+= '	</td>'
+			// box+= '	<td>'
+			// box+= '		<input type="number" min=0 name="invoice'+i+'" class="form-control" placeholder="Invoice no" required/>'
+			// box+= '	</td>'
+			// box+= '	<td>'
+			// box+= '		<input class="form-control" min=0 type="number" name="vatno'+i+'" placeholder="VAT no" required/>'
+			// box+= '	</td>'
+			box+= '	<td>'
+			box+= '<select name="description1" class="form-control description" required>'
+			box+= '<option value="">select</option>'
+			box+= '			{{for obj in stock:}}<option value="{{=obj.description}}" quantity="{{=obj.quantity}}">{{=obj.description}}</option>{{pass}}'
+			box+= '		</select>'
+			box+= '	</td>'
+			box+= '	<td>'
+			box+= '		<input type="number" min=0 class="form-control calc" name="quantity'+i+'"  value="0"  placeholder="Quantity" required/>'
+			box+= '	</td>'
+			box+= '	<td>'
+			box+= '		<input type="number" min=0 class="form-control calc" name="rate'+i+'"  value="0"  placeholder="Rate" required/>'
+			box+= '	</td>'
+			box+= '	<td>'
+			box+= '		<input type="number" min=0 class="form-control calc" name="vat'+i+'" step="0.01"  value="13.5"  placeholder="VAT" required/>'
+			box+= '	</td>'
+			box+= '	<td>'
+			box+= '		<input type="number" min=0 class="form-control calc	" name="amount'+i+'" readonly="readonly"  value="0" placeholder="Amount" required/>'
+			box+= '	</td>'
+			box += '<td>'
+			box +=	'	<select class="form-control" name="payment1">'
+			box +=	'		<option value="PENDING">PENDING</option>'
+			box +=	'			<option value="CASH">CASH</option>'
+			box +=	'			<option value="DEBIT CARD">DEBIT CARD</option>'
+			box +=	'			<option value="CREDIT CARD">CREDIT CARD</option>'
+			box +=	'			<option value="OTHER">OTHER</option>'
+			box +=	'		</select>'
+			box +=	'</td>'
+			box+= '<td><a href="#" class="del">x</a></td>'
+			box+= '</tr>'
+			$(".table").append(box);
+			//i++;
+			$(".del").click(function(){
+				$(this).parent().parent().remove();
+			});
+			$(".calc").change(function(){
+				var q = $(this).parent().parent().find("input[name=quantity1]").val();
+				var r = $(this).parent().parent().find("input[name=rate1]").val();		
+				var vat = $(this).parent().parent().find("input[name=vat1]").val();
+				var total = q*r*(1+parseFloat(vat)/100);
+				var amt = $(this).parent().parent().find("input[name=amount1]").val(total);
+				console.log(amt);
+				//console.log(ele);
+			});
+			$(".description").change(function(){
+				var id = $(this).val();
+				var quantity = $(this).find("option[value='"+id+"']").attr("quantity");
+				var parent = $(this).parent().parent().find("input[name=quantity1]").attr("max",quantity);
+			});
+		});
+	});
+</script>
+<!-- PHONE NO	INVOICE NO	VAT NO	MATERIAL DISCRIPTION	QTY.	RATE	AMOUNT	VAT AMOUNT	TOTAL AMOUNT
+-->

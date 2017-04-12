@@ -1,0 +1,26 @@
+{{extend 'layout.html'}}
+
+<a href="/erp/quotation/index">Quotations</a>
+<hr>
+<div class="col-md-12">
+	<table class="table">
+		<tr>
+			<th>Sr No.</th>
+			<th>Company </th>
+			<th>Date</th>
+			<th></th>
+			<th></th>
+		</tr>
+		{{for bill in quotation_data:}}
+		<tr>
+			{{if bill.isActive==1:}}
+				<td>{{=bill.bill_no}}</td>
+				<td>{{=bill.company["name"]}}</td>
+				<td>{{=bill.purchase_date}}</td>
+				<td><a href="/erp/quotation/generate/{{=bill.bill_no}}">Download</a></td>
+				<td><a href="/erp/quotation/transfer_quotation2Sale/{{=bill.bill_no}}">Make Sale</a></td>
+			{{pass}}
+		</tr>
+		{{pass}}
+	</table>
+</div>

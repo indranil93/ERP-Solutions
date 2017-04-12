@@ -1,0 +1,22 @@
+{{extend 'layout.html'}}
+
+<h2>Sales Bills</h2>
+<hr>
+<div class="col-md-12">
+	<table class="table">
+		<tr>
+			<th>Sr No.</th>
+			<th>Company </th>
+			<th>Date</th>
+			<th></th>
+		</tr>
+		{{for bill in bill_data:}}
+		<tr>
+			<td>{{=bill.bill_no}}</td>
+			<td>{{=bill.company["name"]}}</td>
+			<td>{{=bill.purchase_date}}</td>
+			<td><a href="/erp/bill/generate/{{=bill.bill_no}}">Download</a></td>
+		</tr>
+		{{pass}}
+	</table>
+</div>
